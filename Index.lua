@@ -1,12 +1,51 @@
---[[
- .____                  ________ ___.    _____                           __                
- |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
- |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
- |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
- |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
-         \/          \/         \/    \/                \/     \/     \/                   
-          \_Welcome to LuaObfuscator.com   (Alpha 0.10.9) ~  Much Love, Ferib 
+local Players = game:GetService("Players") local RunService = game:GetService("RunService") local LocalPlayer = Players.LocalPlayer
 
-]]--
+_G.HeadSize = 15 _G.HeadTransparency = 1 _G.HeadRGB = Color3.fromRGB(255, 0, 0) _G.HitboxEnabled = true _G.ESPEnabled = false
 
-local v0=game:GetService("Players");local v1=game:GetService("RunService");local v2=v0.LocalPlayer;_G.HeadSize=40 -25 ;_G.HeadTransparency=1;_G.HeadRGB=Color3.fromRGB(219 + 36 ,18 -(10 + 8) ,350 -(87 + 263) );_G.HitboxEnabled=true;_G.ESPEnabled=false;local function v3(v11) return v11:FindFirstChild("Head") or v11:FindFirstChild("UpperHead") or v11:FindFirstChildWhichIsA("MeshPart") ;end local function v4(v12) local v13=442 -(416 + 26) ;local v14;while true do if ((180 -(67 + 113))==v13) then v14=v3(v12);if v14 then pcall(function() v14.Size=Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize);v14.Transparency=_G.HeadTransparency;v14.Color=_G.HeadRGB;v14.Material=Enum.Material.Neon;v14.CanCollide=false;v14.Massless=true;end);end break;end end end local function v5(v15) local v16=0 + 0 ;local v17;while true do if (v16==(0 -0)) then v17=v3(v15);if (v17 and  not v15:FindFirstChild("Highlight") and _G.ESPEnabled) then local v39=0 + 0 ;local v40;while true do if (0==v39) then v40=Instance.new("Highlight",v15);v40.Adornee=v17;v39=1 + 0 ;end if (v39==1) then v40.FillTransparency=3 -2 ;v40.OutlineColor=_G.HeadRGB;v39=954 -(802 + 150) ;end if (v39==(5 -3)) then v40.OutlineTransparency=430 -(44 + 386) ;break;end end end break;end end end local function v6(v18) local v19=v3(v18);if v19 then if _G.HitboxEnabled then v4(v18);end if _G.ESPEnabled then v5(v18);end else v18.ChildAdded:Connect(function() local v34=v3(v18);if v34 then local v41=0 -0 ;while true do if (v41==(0 + 0)) then if _G.HitboxEnabled then v4(v18);end if _G.ESPEnabled then v5(v18);end break;end end end end);end end local function v7(v20) local v21=0 + 0 ;while true do if (v21==(0 + 0)) then if v20.Character then v6(v20.Character);end v20.CharacterAdded:Connect(v6);break;end end end for v22,v23 in pairs(v0:GetPlayers()) do if (v23~=v2) then v7(v23);end end v0.PlayerAdded:Connect(function(v24) if (v24~=v2) then v7(v24);end end);v1.RenderStepped:Connect(function() for v30,v31 in pairs(v0:GetPlayers()) do if ((v31~=v2) and v31.Character) then local v35=997 -(915 + 82) ;local v36;while true do if ((0 -0)==v35) then v36=v3(v31.Character);if v36 then local v55=0 -0 ;while true do if (v55==(0 + 0)) then if _G.HitboxEnabled then v4(v31.Character);end if (_G.ESPEnabled and  not v31.Character:FindFirstChild("Highlight")) then v5(v31.Character);end break;end end end break;end end end end end);local v8=loadstring(game:HttpGet("https://sirius.menu/rayfield"))();local v9=v8:CreateWindow({Name="Hitbox & ESP Config",LoadingTitle="Carregando...",LoadingSubtitle="By elegostahehe1",ConfigurationSaving={Enabled=false},Discord={Enabled=false},KeySystem=false});local v10=v9:CreateTab("Configuração");v10:CreateSlider({Name="Tamanho da Cabeça",Range={2 -0 ,79 -44 },Increment=1 -0 ,CurrentValue=_G.HeadSize,Callback=function(v25) _G.HeadSize=v25;end});v10:CreateSlider({Name="Transparência da Cabeça",Range={0 + 0 ,886 -(261 + 624) },Increment=0.1 + 0 ,CurrentValue=_G.HeadTransparency,Callback=function(v26) _G.HeadTransparency=v26;end});v10:CreateColorPicker({Name="Cor RGB da Cabeça e ESP",Color=_G.HeadRGB,Callback=function(v27) _G.HeadRGB=v27;for v32,v33 in pairs(v0:GetPlayers()) do if ((v33~=v2) and v33.Character) then local v37=v3(v33.Character);if v37 then v37.Color=_G.HeadRGB;end local v38=v33.Character:FindFirstChild("Highlight");if v38 then v38.OutlineColor=_G.HeadRGB;end end end end});v10:CreateToggle({Name="Ativar Hitbox",CurrentValue=_G.HitboxEnabled,Callback=function(v28) _G.HitboxEnabled=v28;end});v10:CreateToggle({Name="Ativar ESP",CurrentValue=_G.ESPEnabled,Callback=function(v29) _G.ESPEnabled=v29;end});
+local function getHead(character) return character:FindFirstChild("Head") or character:FindFirstChild("UpperHead") or character:FindFirstChildWhichIsA("MeshPart") end
+
+local function resetHitbox(character) local head = getHead(character) if head then pcall(function() head.Size = Vector3.new(2, 1, 1) head.Transparency = 0 head.Material = Enum.Material.Plastic head.Color = Color3.fromRGB(255, 255, 255) head.CanCollide = true head.Massless = false end) end end
+
+local function applyHitbox(character) local head = getHead(character) if head then pcall(function() head.Size = Vector3.new(_G.HeadSize, _G.HeadSize, _G.HeadSize) head.Transparency = _G.HeadTransparency head.Color = _G.HeadRGB head.Material = Enum.Material.Neon head.CanCollide = false head.Massless = true end) end end
+
+local function applyESP(character) local head = getHead(character) if head and not character:FindFirstChild("Highlight") then local highlight = Instance.new("Highlight", character) highlight.Adornee = head highlight.FillTransparency = 1 highlight.OutlineColor = _G.HeadRGB highlight.OutlineTransparency = 0 end end
+
+local function removeESP(character) local highlight = character:FindFirstChild("Highlight") if highlight then highlight:Destroy() end end
+
+local function setupCharacter(character) local head = getHead(character) if head then if _G.HitboxEnabled then applyHitbox(character) else resetHitbox(character) end if _G.ESPEnabled then applyESP(character) else removeESP(character) end end character.ChildAdded:Connect(function() local newHead = getHead(character) if newHead then if _G.HitboxEnabled then applyHitbox(character) else resetHitbox(character) end if _G.ESPEnabled then applyESP(character) else removeESP(character) end end end) end
+
+local function setupPlayer(player) if player.Character then setupCharacter(player.Character) end player.CharacterAdded:Connect(setupCharacter) end
+
+for _, player in pairs(Players:GetPlayers()) do if player ~= LocalPlayer then setupPlayer(player) end end
+
+Players.PlayerAdded:Connect(function(player) if player ~= LocalPlayer then setupPlayer(player) end end)
+
+RunService.RenderStepped:Connect(function() for _, player in pairs(Players:GetPlayers()) do if player ~= LocalPlayer and player.Character then local head = getHead(player.Character) if head then if _G.HitboxEnabled then applyHitbox(player.Character) else resetHitbox(player.Character) end
+
+if _G.ESPEnabled then
+                if not player.Character:FindFirstChild("Highlight") then
+                    applyESP(player.Character)
+                end
+            else
+                removeESP(player.Character)
+            end
+        end
+    end
+end
+
+end)
+
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))() local Window = Rayfield:CreateWindow({ Name = "Hitbox & ESP Config", LoadingTitle = "Carregando...", LoadingSubtitle = "By elegostahehe1", ConfigurationSaving = { Enabled = false }, Discord = { Enabled = false }, KeySystem = false })
+
+local Main = Window:CreateTab("Configuração")
+
+Main:CreateSlider({ Name = "Tamanho da Cabeça", Range = {2, 35}, Increment = 1, CurrentValue = _G.HeadSize, Callback = function(Value) _G.HeadSize = Value end })
+
+Main:CreateSlider({ Name = "Transparência da Cabeça", Range = {0, 1}, Increment = 0.1, CurrentValue = _G.HeadTransparency, Callback = function(Value) _G.HeadTransparency = Value end })
+
+Main:CreateColorPicker({ Name = "Cor RGB da Cabeça e ESP", Color = _G.HeadRGB, Callback = function(Value) _G.HeadRGB = Value for _, player in pairs(Players:GetPlayers()) do if player ~= LocalPlayer and player.Character then local head = getHead(player.Character) if head then head.Color = _G.HeadRGB end local highlight = player.Character:FindFirstChild("Highlight") if highlight then highlight.OutlineColor = _G.HeadRGB end end end end })
+
+Main:CreateToggle({ Name = "Ativar Hitbox", CurrentValue = _G.HitboxEnabled, Callback = function(Value) _G.HitboxEnabled = Value end })
+
+Main:CreateToggle({ Name = "Ativar ESP", CurrentValue = _G.ESPEnabled, Callback = function(Value) _G.ESPEnabled = Value end })
+
